@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jan 24 20:25:55 2016
 
-@author: Carlos
-"""
 
 class Person:
     
