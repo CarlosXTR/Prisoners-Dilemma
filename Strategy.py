@@ -2,7 +2,7 @@
 
 import numpy as np
 
-class Strategy():
+class Strategy:
     
     Confess = 0
     NoConfess = 1
@@ -12,12 +12,30 @@ class Strategy():
     
     strategy = -1
 
-    def __init__(self):
-        self.strategy =  np.random.randint(0,self.size)
+    def __init__(self,*args, **kwargs):
+        if(len(args) == 0):
+            self.initDefault()
+        elif(len(args) == 1):
+            self.initStrategy(args[0])
         
-    def __init__(self,strategy):        
-        self.strategy = strategy        
-        
+    def initDefault(self):
+        self.strategy = np.random.randint(0,self.size)
+
+    def initStrategy(self, s):
+        if( s < self.size):        
+            self.strategy = s
+        else:
+            print("Error init")
+
+    def setStrategy(self,s):
+        if(s < self.size):
+            self.strategy = s
+        else:
+            return -1
+            
+    def getStrategy(self):
+        return self.strategy
+    
     def Size(self):
         return self.size
 
@@ -30,6 +48,8 @@ class Strategy():
             return np.random.randint(0,2)
 
 if __name__ == "__main__":
-    s = Strategy(0)
+    s = Strategy(2)
+    print(s)
     print(s.Size())
+    print(s.NextStep())
     print(s.NextStep())

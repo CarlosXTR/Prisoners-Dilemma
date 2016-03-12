@@ -7,9 +7,9 @@ class Poblation:
     NumPeople = 0
     
     def __init__(self, N):
-        NumPeoble = N
-        for i in NumPeoble:
-            p = Person(i,NumPeoble)
+        self.NumPeople = N
+        for i in self.NumPeople:
+            p = Person(i,self.NumPeople)
             self.People.append(p)
             
     def Chooses(self):
