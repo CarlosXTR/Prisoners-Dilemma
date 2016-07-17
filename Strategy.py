@@ -3,16 +3,16 @@
 import numpy as np
 
 class Strategy:
-    
-    Confess = 0
-    NoConfess = 1
-    Random = 2
+
+    CONFESS = 0
+    NOCONFESS = 1
+    RANDOM = 2
     
     size = 3
-    
-    strategy = -1
 
     def __init__(self,*args, **kwargs):
+        self.strategy = -1
+
         if(len(args) == 0):
             self.initDefault()
         elif(len(args) == 1):
@@ -40,15 +40,16 @@ class Strategy:
         return self.size
 
     def NextStep(self):
-        if(self.strategy == self.Confess):
+        if(self.strategy == self.CONFESS):
             return 0
-        elif (self.strategy == self.NoConfess):
+        elif (self.strategy == self.NOCONFESS):
             return 1
-        elif (self.strategy == self.Random):
+        elif (self.strategy == self.RANDOM):
             return np.random.randint(0,2)
 
 if __name__ == "__main__":
     s = Strategy(2)
+    print(Strategy.CONFESS)
     print(s)
     print(s.Size())
     print(s.NextStep())

@@ -2,32 +2,29 @@ from Strategy import Strategy
 
 
 class Person:
-    MyChoose = {}
-    Id = 0
-    NumberCompanion = 0
-    Punish = 0
-    strategy = 0
 
     def __init__(self, *args, **kwargs):
-        if (len(args) == 2):
-            self.initDefault(args[0], args[1])
-        elif (len(args) == 3):
-            self.initStrategy(args[0], args[1], args[2])
+        self.MyChoose = {}
+        self.Id = args[0]
+        self.NumberCompanion = args[1]
+        self.Punish = 0
+        self.strategy = 0
 
-    def initDefault(self, Id, ncompanion):
-        self.Id = Id
-        self.NumberCompanion = ncompanion
-        for i in range(ncompanion):
-            if (i != Id):
+        if (len(args) == 2):
+            self.initDefault()
+        elif (len(args) == 3):
+            self.initStrategy(args[2])
+
+    def initDefault(self):
+        for i in range(self.NumberCompanion):
+            if (i != self.Id):
                 st = Strategy()
                 self.MyChoose[i] = [st, []]
 
-    def initStrategy(self, Id, ncompanion, s):
-        self.Id = Id
-        self.NumberCompanion = ncompanion
-        for i, strategy in zip(range(ncompanion), s):
-            if (i != Id):
-                self.MyChoose[i] = [Strategy(strategy), []]
+    def initStrategy(self, s):
+        for i in  range(self.NumberCompanion):
+            if (i != self.Id):
+                self.MyChoose[i] = [Strategy(s), []]
 
     def getId(self):
         return self.Id
@@ -44,18 +41,39 @@ class Person:
     def getNumberCompanion(self):
         return self.NumberCompanion
 
-    def getElection(self,n):
+    def getElections(self,n):
         return self.MyChoose[n][1][:]
+
+    def getPunish(self):
+        return self.Punish
+
+    def setPunish(self,punish):
+        self.Punish = punish
 
     def MakeChoose(self):
         for i in range(self.NumberCompanion):
-            if ( i in self.MyChoose):
+            if(i in self.MyChoose):
                 choose = self.MyChoose[i][0].NextStep()
                 self.MyChoose[i][1].append(choose)
 
+#    def MakeChoose(self,companion):
+#        if(companion in self.MyChoose):
+#            choose = self.MyChoose[companion][0].NextStep()
+#            self.MyChoose[companion][1].append(choose)
 
 if __name__ == "__main__":
-    p = Person(1, 20)
+    numpersonp = 20
+    numpersonp1 = 5
+
+    p = Person(2, numpersonp,Strategy.RANDOM)
+    p2 = Person(1, numpersonp1)
+
     p.MakeChoose()
     p.MakeChoose()
-    print(p.getElection(2))
+
+    for i in range(numpersonp):
+        if(i != p.getId()):
+            print(str(i) + "->"+str(p.getElections(i)))
+    for i in range(numpersonp1):
+        if (i != p2.getId()):
+            print(str(i) + "->" + str(p2.getElections(i)))
